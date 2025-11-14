@@ -1,0 +1,40 @@
+.footer {
+  background-color: #f1f8fc;
+  padding: 1rem 0;
+
+  p{
+    font-size: 0.8rem;
+  }
+  
+  .footer-container {
+    .column-left,
+    .column-right {
+      p {
+        margin: 0.3rem 0;
+        text-align: left;
+        line-height: 15px;
+      }
+    }
+
+    // Colonne de droite : en colonne sur mobile
+    .column-right {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      gap: 0.3rem;
+    }
+
+    // ✅ En desktop, les éléments passent en ligne
+    @media (min-width: 768px) {
+      .column-right {
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+        text-align: left;
+      }
+    }
+  }
+}
+
+
+
