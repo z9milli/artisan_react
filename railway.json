@@ -1,0 +1,12 @@
+{
+  "builds": [
+    {
+      "type": "npm",
+      "root": "backend"
+    }
+  ],
+  "deploy": {
+    "start": "npm start",
+    "root": "backend"
+  }
+}
