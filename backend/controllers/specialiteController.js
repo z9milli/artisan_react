@@ -1,13 +1,17 @@
-// src/controllers/specialiteController.js (Mis à jour)
+// Controller gérant les requêtes HTTP liées aux spécialités.
 
-const specialiteService = require('../services/specialiteService'); // 👈 Import du service
+const specialiteService = require("../services/specialiteService");
 
-// Suppression des imports de modèles (db, Specialite, Categorie) qui ne sont plus nécessaires ici.
-
-// Récupérer toutes les spécialités avec leur catégorie
+/**
+ * Récupère toutes les spécialités avec leur catégorie.
+ * @async
+ * @function getAllSpecialites
+ * @param {Object} req - Objet requête Express
+ * @param {Object} res - Objet réponse Express
+ * @returns {Promise<void>} JSON avec toutes les spécialités (200) ou 500 en cas d'erreur serveur
+ */
 exports.getAllSpecialites = async (req, res) => {
   try {
-    // Délégation totale au Service
     const specialites = await specialiteService.fetchAllSpecialites();
     res.status(200).json(specialites);
   } catch (error) {
@@ -16,10 +20,19 @@ exports.getAllSpecialites = async (req, res) => {
   }
 };
 
-// Récupérer une spécialité par ID avec sa catégorie
+/**
+ * Récupère une spécialité par ID avec sa catégorie.
+ * @async
+ * @function getSpecialiteById
+ * @param {Object} req - Objet requête Express (params.id = ID de la spécialité)
+ * @param {Object} res - Objet réponse Express
+ * @returns {Promise<void>} JSON avec la spécialité (200), 404 si non trouvée, 500 en cas d'erreur serveur
+ */
 exports.getSpecialiteById = async (req, res) => {
   try {
-    const specialite = await specialiteService.fetchSpecialiteById(req.params.id);
+    const specialite = await specialiteService.fetchSpecialiteById(
+      req.params.id
+    );
 
     if (!specialite) {
       return res.status(404).json({ message: "Spécialité non trouvée" });
@@ -32,7 +45,14 @@ exports.getSpecialiteById = async (req, res) => {
   }
 };
 
-// Créer une spécialité
+/**
+ * Crée une nouvelle spécialité.
+ * @async
+ * @function createSpecialite
+ * @param {Object} req - Objet requête Express (body = données de la spécialité)
+ * @param {Object} res - Objet réponse Express
+ * @returns {Promise<void>} JSON avec la spécialité créée (201), ou 500 en cas d'erreur serveur
+ */
 exports.createSpecialite = async (req, res) => {
   try {
     const newSpecialite = await specialiteService.createSpecialite(req.body);
@@ -43,28 +63,47 @@ exports.createSpecialite = async (req, res) => {
   }
 };
 
-// Mettre à jour une spécialité
+/**
+ * Met à jour une spécialité existante.
+ * @async
+ * @function updateSpecialite
+ * @param {Object} req - Objet requête Express (params.id = ID, body = nouvelles données)
+ * @param {Object} res - Objet réponse Express
+ * @returns {Promise<void>} JSON avec la spécialité mise à jour (200), 404 si non trouvée, 500 en cas d'erreur serveur
+ */
 exports.updateSpecialite = async (req, res) => {
   try {
-    const updatedSpecialite = await specialiteService.updateSpecialite(req.params.id, req.body);
-    
-    if (!updatedSpecialite) 
-        return res.status(404).json({ message: "Spécialité non trouvée" });
+    const updatedSpecialite = await specialiteService.updateSpecialite(
+      req.params.id,
+      req.body
+    );
+
+    if (!updatedSpecialite)
+      return res.status(404).json({ message: "Spécialité non trouvée" });
 
     res.status(200).json(updatedSpecialite);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Impossible de mettre à jour la spécialité" });
+    res
+      .status(500)
+      .json({ message: "Impossible de mettre à jour la spécialité" });
   }
 };
 
-// Supprimer une spécialité
+/**
+ * Supprime une spécialité.
+ * @async
+ * @function deleteSpecialite
+ * @param {Object} req - Objet requête Express (params.id = ID de la spécialité)
+ * @param {Object} res - Objet réponse Express
+ * @returns {Promise<void>} Message de succès (200), 404 si non trouvée, 500 en cas d'erreur serveur
+ */
 exports.deleteSpecialite = async (req, res) => {
   try {
     const deleted = await specialiteService.deleteSpecialite(req.params.id);
-    
-    if (!deleted) 
-        return res.status(404).json({ message: "Spécialité non trouvée" });
+
+    if (!deleted)
+      return res.status(404).json({ message: "Spécialité non trouvée" });
 
     res.status(200).json({ message: "Spécialité supprimée avec succès" });
   } catch (error) {

@@ -1,50 +1,70 @@
-// src/services/categorieService.js
+// Service gérant la logique métier liée aux catégories.
+// Effectue les opérations CRUD en déléguant à Sequelize.
 
+// Import des modèles
 const db = require("../models");
 const Categorie = db.Categorie;
 
-// --- Logique Service (CRUD) ---
-
-// Récupérer toutes les catégories
+/**
+ * Récupère toutes les catégories.
+ * @async
+ * @function fetchAllCategories
+ * @returns {Promise<Array<Object>>} Liste de toutes les catégories
+ */
 exports.fetchAllCategories = async () => {
-    // Le Service appelle directement le Model pour l'accès DB
-    return await Categorie.findAll();
+  return await Categorie.findAll();
 };
 
-// Récupérer une catégorie par ID
+/**
+ * Récupère une catégorie par son ID.
+ * @async
+ * @function fetchCategorieById
+ * @param {number} id - ID de la catégorie
+ * @returns {Promise<Object|null>} Catégorie trouvée ou null si non existante
+ */
 exports.fetchCategorieById = async (id) => {
-    return await Categorie.findByPk(id);
+  return await Categorie.findByPk(id);
 };
 
-// Créer une catégorie
+/**
+ * Crée une nouvelle catégorie.
+ * @async
+ * @function createCategorie
+ * @param {Object} data - Données de la catégorie à créer
+ * @returns {Promise<Object>} Catégorie créée
+ */
 exports.createCategorie = async (data) => {
-    // Logique métier : (ex: validation avant la création)
-    // if (!data.nom) throw new Error("Le nom est obligatoire"); 
+  // Exemple de validation possible :
+  // if (!data.nom) throw new Error("Le nom est obligatoire");
 
-    return await Categorie.create(data);
+  return await Categorie.create(data);
 };
 
-// Mettre à jour une catégorie
+/**
+ * Met à jour une catégorie existante.
+ * @async
+ * @function updateCategorie
+ * @param {number} id - ID de la catégorie à mettre à jour
+ * @param {Object} data - Données à mettre à jour
+ * @returns {Promise<Object|null>} Catégorie mise à jour ou null si non trouvée
+ */
 exports.updateCategorie = async (id, data) => {
-    // 1. Mise à jour de la DB
-    const [updated] = await Categorie.update(data, { 
-        where: { id_categorie: id } 
-    });
-    
-    // Si la mise à jour n'a affecté aucune ligne (catégorie non trouvée)
-    if (!updated) return null; 
+  const [updated] = await Categorie.update(data, {
+    where: { id_categorie: id },
+  });
+  if (!updated) return null;
 
-    // 2. Récupérer la version mise à jour
-    return await Categorie.findByPk(id);
+  return await Categorie.findByPk(id);
 };
 
-// Supprimer une catégorie
+/**
+ * Supprime une catégorie.
+ * @async
+ * @function deleteCategorie
+ * @param {number} id - ID de la catégorie à supprimer
+ * @returns {Promise<boolean>} true si supprimée, false si non trouvée
+ */
 exports.deleteCategorie = async (id) => {
-    // 1. Suppression de la DB
-    const deleted = await Categorie.destroy({ 
-        where: { id_categorie: id } 
-    });
-
-    // 2. Le Service traduit le résultat en booléen facile à gérer pour le Contrôleur
-    return deleted > 0;
+  const deleted = await Categorie.destroy({ where: { id_categorie: id } });
+  return deleted > 0;
 };

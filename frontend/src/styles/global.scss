@@ -1,2 +1,9 @@
+@font-face {
+  font-family: "Graphik";
+  src: url("../assets/fonts/Graphik-Regular-Trial.woff") ;
+  src: url("../assets/fonts/Graphik-Light-Trial.woff") ;
+}
 
-
+h1, h2, p, div{
+  font-family: "Graphik", serif;
+}

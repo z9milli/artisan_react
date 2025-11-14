@@ -16,7 +16,7 @@
       }
     }
 
-    // Colonne de droite : en colonne sur mobile
+ 
     .column-right {
       display: flex;
       flex-direction: column;
@@ -24,7 +24,7 @@
       gap: 0.3rem;
     }
 
-    // ✅ En desktop, les éléments passent en ligne
+    
     @media (min-width: 768px) {
       .column-right {
         flex-direction: row;

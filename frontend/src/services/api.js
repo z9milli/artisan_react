@@ -1,6 +1,10 @@
 const API_URL = "http://localhost:5050/api";
 
-// Récupérer les 3 artisans du mois
+/**
+ * Récupère les 3 artisans du mois.
+ * @async
+ * @returns {Promise<Array>} Tableau des artisans du mois.
+ */
 export async function getArtisansDuMois() {
   try {
     const response = await fetch(`${API_URL}/artisans/mois`);
@@ -14,7 +18,11 @@ export async function getArtisansDuMois() {
   }
 }
 
-// Récupérer toutes les catégories
+/**
+ * Récupère toutes les catégories.
+ * @async
+ * @returns {Promise<Array>} Tableau des catégories.
+ */
 export async function getCategories() {
   try {
     const response = await fetch(`${API_URL}/categories`);
@@ -28,7 +36,11 @@ export async function getCategories() {
   }
 }
 
-// Récupérer tous les artisans
+/**
+ * Récupère tous les artisans.
+ * @async
+ * @returns {Promise<Array>} Tableau de tous les artisans.
+ */
 export async function getArtisans() {
   try {
     const response = await fetch(`${API_URL}/artisans`);
@@ -42,10 +54,17 @@ export async function getArtisans() {
   }
 }
 
-// Récupérer les artisans par catégorie (par nom)
+/**
+ * Récupère les artisans correspondant à une catégorie donnée.
+ * @async
+ * @param {string} categorieNom - Nom de la catégorie
+ * @returns {Promise<Array>} Tableau des artisans de la catégorie.
+ */
 export async function getArtisansByCategorie(categorieNom) {
   try {
-    const response = await fetch(`${API_URL}/artisans/categorie/${categorieNom}`);
+    const response = await fetch(
+      `${API_URL}/artisans/categorie/${categorieNom}`
+    );
     if (!response.ok) throw new Error("Erreur fetch API");
     const data = await response.json();
     console.log(`Artisans de la catégorie ${categorieNom} :`, data);
@@ -56,7 +75,12 @@ export async function getArtisansByCategorie(categorieNom) {
   }
 }
 
-// Récupérer un artisan par son ID
+/**
+ * Récupère un artisan par son ID.
+ * @async
+ * @param {number|string} id - ID de l'artisan
+ * @returns {Promise<Object|null>} Artisan ou null si non trouvé.
+ */
 export async function getArtisanById(id) {
   try {
     const response = await fetch(`${API_URL}/artisans/${id}`);
@@ -70,7 +94,12 @@ export async function getArtisanById(id) {
   }
 }
 
-// Rechercher des artisans par nom
+/**
+ * Recherche des artisans par nom.
+ * @async
+ * @param {string} query - Texte de recherche
+ * @returns {Promise<Array>} Tableau des artisans correspondant à la recherche.
+ */
 export async function searchArtisans(query) {
   try {
     const response = await fetch(`${API_URL}/artisans/search?q=${query}`);
@@ -84,13 +113,19 @@ export async function searchArtisans(query) {
   }
 }
 
-// Envoyer un formulaire de contact
+/**
+ * Envoie un formulaire de contact au serveur.
+ * @async
+ * @param {Object} formData - Données du formulaire {name, email, object, message}
+ * @returns {Promise<Object>} Réponse du serveur
+ * @throws {Error} En cas d'erreur d'envoi
+ */
 export async function sendContactForm(formData) {
   try {
     const response = await fetch(`${API_URL}/contact`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     });
@@ -103,5 +138,3 @@ export async function sendContactForm(formData) {
     throw error;
   }
 }
-
-
