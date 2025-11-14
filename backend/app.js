@@ -3,6 +3,7 @@
 
 const express = require("express");
 const cors = require("cors");
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 5050; // Port du serveur
@@ -50,6 +51,11 @@ const specialiteRoutes = require("./routes/specialites");
 const categorieRoutes = require("./routes/categories");
 
 /**
+ * Servir les fichiers statiques du build React
+ */
+app.use(express.static(path.join(__dirname, "frontend", "build")));
+
+/**
  * Routes API pour les artisans
  */
 app.use("/api/artisans", artisanRoutes);
@@ -63,6 +69,14 @@ app.use("/api/specialites", specialiteRoutes);
  * Routes API pour les catégories
  */
 app.use("/api/categories", categorieRoutes);
+
+/**
+ * Fallback pour React Router : toutes les routes non API renvoient index.html
+ * @note Doit être placé après toutes les routes API
+ */
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
+});
 
 // --- Démarrage du serveur ---
 
