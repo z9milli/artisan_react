@@ -55,13 +55,13 @@ const Accueil = () => {
   }, []);
 
   return (
-    <div className="accueil container py-4">
+    <main className="accueil container py-4">
       <h1 className="mb-4 text-center title-small">
         Comment trouver mon artisan ?
       </h1>
 
       {/* Étapes pour trouver un artisan */}
-      <div className="etapes-container border rounded p-3">
+      <section className="etapes-container border rounded p-3">
         <div className="row g-1">
           <div className="col-12 col-md-6">
             <div className="etape p-2">
@@ -82,10 +82,10 @@ const Accueil = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Section des trois artisans du mois */}
-      <div className="mb-4 text-center title-small">
+      <section className="mb-4 text-center title-small">
         <h2>Les trois artisans du mois</h2>
 
         <div className="row mt-2 g-3">
@@ -109,8 +109,8 @@ const Accueil = () => {
             </div>
           ))}
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

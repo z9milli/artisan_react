@@ -1,36 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import ArtisanCard from "../components/ArtisanCard";
 
 /**
  * Page affichant la liste des artisans.
  *
  * Si un paramètre `nom` est présent dans l'URL, filtre les artisans
- * par catégorie. Sinon, affiche tous les artisans.
+ * par catégorie.
+ * Si une query string `q` est présente, affiche les résultats de recherche.
  *
  * @component
- * @returns {JSX.Element} Liste des artisans (avec filtres éventuels)
+ * @returns {JSX.Element} Liste des artisans
  */
 const Liste = () => {
-  const { nom } = useParams(); // Récupération de la catégorie depuis l'URL
-  const [artisans, setArtisans] = useState([]); // État pour les artisans récupérés
-  const [loading, setLoading] = useState(true); // État pour le chargement
+  const { nom } = useParams();
+  const location = useLocation();
 
-  /**
-   * Récupère les artisans depuis l'API.
-   * Si `nom` est défini, récupère les artisans de la catégorie correspondante.
-   */
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get("q");
+
+  const [artisans, setArtisans] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchArtisans = async () => {
       setLoading(true);
+
       try {
-        const url = nom
-          ? `http://localhost:5050/api/artisans/categorie/${nom}`
-          : `http://localhost:5050/api/artisans`;
+        let url = "http://localhost:5050/api/artisans";
+
+        if (nom) {
+          url = `http://localhost:5050/api/artisans/categorie/${nom}`;
+        }
+
+        if (query) {
+          url = `http://localhost:5050/api/artisans/search?q=${encodeURIComponent(
+            query
+          )}`;
+        }
 
         const response = await fetch(url);
         const data = await response.json();
-        setArtisans(data);
+
+        if (Array.isArray(data)) {
+          setArtisans(data);
+        } else {
+          console.error("Réponse API inattendue :", data);
+          setArtisans([]);
+        }
       } catch (error) {
         console.error("Erreur :", error);
         setArtisans([]);
@@ -40,33 +57,32 @@ const Liste = () => {
     };
 
     fetchArtisans();
-  }, [nom]);
+  }, [nom, query]);
 
-  // Affichage pendant le chargement
-  if (loading) return <p className="text-center mt-5">Chargement...</p>;
+  if (loading) {
+    return <p className="text-center mt-5">Chargement...</p>;
+  }
 
   return (
-    <div className="container py-4">
-      {/* Titre principal */}
+    <main className="container py-4">
       <h1 className="mb-2 text-center">Liste des Artisans</h1>
 
-      {/* Titre secondaire si catégorie filtrée */}
       {nom && <h2 className="mb-4 text-center">Catégorie : {nom}</h2>}
 
-      {/* Gestion du cas où aucun artisan n'est trouvé */}
+      {query && <h2 className="mb-4 text-center">Recherche : {query}</h2>}
+
       {artisans.length === 0 ? (
         <p className="text-center">Aucun artisan trouvé.</p>
       ) : (
-        <div className="row g-3">
-          {/* Affichage de chaque artisan via le composant ArtisanCard */}
+        <section className="row g-3">
           {artisans.map((artisan) => (
             <div className="col-12 col-md-4" key={artisan.id_artisan}>
               <ArtisanCard artisan={artisan} />
             </div>
           ))}
-        </div>
+        </section>
       )}
-    </div>
+    </main>
   );
 };
 
