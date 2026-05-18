@@ -37,6 +37,8 @@ function App() {
           {/* Route liste d'artisans filtrée par catégorie */}
           <Route path="/categorie/:nom" element={<Liste />} />
 
+          <Route path="/recherche" element={<Liste />} />
+
           {/* Route fiche détaillée d'un artisan */}
           <Route path="/fiche/:id" element={<Fiche />} />
 

@@ -12,12 +12,12 @@ import "../styles/Erreur.scss";
  */
 const Erreur = () => {
   return (
-    <div className="erreur-container">
+    <main className="erreur-container">
       {/* Image illustrant l'erreur 404 */}
       <img src="/img/404.jpg" alt="Page non trouvée" className="erreur-image" />
       {/* Message de page non trouvée */}
       <h1>Page non trouvée</h1>
-    </div>
+    </main>
   );
 };
 

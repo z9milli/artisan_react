@@ -58,10 +58,10 @@ const Fiche = () => {
   if (!artisan) return <p className="text-center mt-5">Artisan introuvable.</p>;
 
   return (
-    <div className="container py-4">
+    <main className="container py-4">
       <h1 className="text-center mb-4">Fiche artisan</h1>
 
-      <div
+      <section
         className="p-4 rounded"
         style={{
           backgroundColor: "#00497c",
@@ -100,7 +100,7 @@ const Fiche = () => {
             </p>
 
             {/* Section "À propos" */}
-            <div
+            <section
               className="p-3 rounded mb-3"
               style={{ backgroundColor: "#384050" }}
             >
@@ -117,12 +117,12 @@ const Fiche = () => {
                 {artisan.a_propos ||
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin."}
               </p>
-            </div>
+            </section>
           </div>
 
           {/* Colonne droite : Formulaire de contact */}
           <div className="col-12 col-lg-6">
-            <div
+            <section
               className="p-4 rounded h-100"
               style={{ backgroundColor: "#f1f8fc" }}
             >
@@ -178,12 +178,12 @@ const Fiche = () => {
                   {sending ? "Envoi en cours..." : "Envoyer le message"}
                 </button>
               </form>
-            </div>
+            </section>
           </div>
         </div>
 
         {/* Lien vers le site web de l'artisan */}
-        <div
+        <section
           className="text-center mt-4 pt-3"
           style={{ borderColor: "rgba(255,255,255,0.3)" }}
         >
@@ -199,9 +199,9 @@ const Fiche = () => {
           ) : (
             <span style={{ opacity: 0.6, color: "#fff" }}>Aucun site web</span>
           )}
-        </div>
-      </div>
-    </div>
+        </section>
+      </section>
+    </main>
   );
 };
 

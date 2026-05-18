@@ -84,13 +84,34 @@ exports.searchArtisans = async (query) => {
 
   const artisans = await Artisan.findAll({
     where: {
-      nom: {
-        [db.Sequelize.Op.like]: `%${query}%`,
-      },
+      [db.Sequelize.Op.or]: [
+        {
+          nom: {
+            [db.Sequelize.Op.like]: `%${query}%`,
+          },
+        },
+        {
+          ville: {
+            [db.Sequelize.Op.like]: `%${query}%`,
+          },
+        },
+        {
+          "$specialite.nom_specialite$": {
+            [db.Sequelize.Op.like]: `%${query}%`,
+          },
+        },
+      ],
     },
+    include: [
+      {
+        model: Specialite,
+        as: "specialite",
+        required: false,
+      },
+    ],
   });
 
-  return attachSpecialiteToArtisans(artisans);
+  return artisans;
 };
 
 /**
