@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
     port: dbConfig.port,
-  }
+  },
 );
 
 sequelize
@@ -45,6 +45,11 @@ db.Artisan.belongsTo(db.Specialite, {
 db.Specialite.hasMany(db.Artisan, {
   foreignKey: "id_specialite",
   as: "artisans",
+});
+
+db.Specialite.belongsTo(db.Categorie, {
+  foreignKey: "id_categorie",
+  as: "categorie",
 });
 
 module.exports = db;
