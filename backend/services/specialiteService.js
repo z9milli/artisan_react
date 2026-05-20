@@ -16,7 +16,7 @@ const attachCategorieToSpecialites = async (specialites) => {
     specialites.map(async (spec) => {
       const categorie = await Categorie.findByPk(spec.id_categorie);
       return { ...spec.toJSON(), categorie };
-    })
+    }),
   );
 };
 

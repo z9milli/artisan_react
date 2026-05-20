@@ -49,9 +49,8 @@ exports.getArtisansDuMois = async (req, res) => {
 exports.getArtisansByCategorie = async (req, res) => {
   try {
     const categorieNom = req.params.nom;
-    const artisans = await artisanService.fetchArtisansByCategorie(
-      categorieNom
-    );
+    const artisans =
+      await artisanService.fetchArtisansByCategorie(categorieNom);
 
     if (!artisans) {
       return res.status(404).json({ message: "Catégorie non trouvée" });
@@ -65,7 +64,7 @@ exports.getArtisansByCategorie = async (req, res) => {
 };
 
 /**
- * Recherche des artisans par nom.
+ * Recherche des artisans par nom, ville ou spécialité.
  * @async
  * @function searchArtisans
  * @param {Object} req - Objet requête Express
@@ -74,6 +73,7 @@ exports.getArtisansByCategorie = async (req, res) => {
  */
 exports.searchArtisans = async (req, res) => {
   try {
+    // Récupère le terme recherché dans l'URL : ?q=...
     const query = req.query.q;
     const artisans = await artisanService.searchArtisans(query);
 
@@ -140,7 +140,7 @@ exports.updateArtisan = async (req, res) => {
   try {
     const updatedArtisan = await artisanService.updateArtisan(
       req.params.id,
-      req.body
+      req.body,
     );
 
     if (!updatedArtisan) {

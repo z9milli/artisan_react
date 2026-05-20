@@ -8,40 +8,49 @@ const specialiteService = require("../services/specialiteService");
  * @function getAllSpecialites
  * @param {Object} req - Objet requête Express
  * @param {Object} res - Objet réponse Express
- * @returns {Promise<void>} JSON avec toutes les spécialités (200) ou 500 en cas d'erreur serveur
+ * @returns {Promise<void>} Renvoie la liste des spécialités au format JSON
  */
 exports.getAllSpecialites = async (req, res) => {
   try {
     const specialites = await specialiteService.fetchAllSpecialites();
+
     res.status(200).json(specialites);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Erreur serveur" });
+
+    res.status(500).json({
+      message: "Erreur serveur",
+    });
   }
 };
 
 /**
- * Récupère une spécialité par ID avec sa catégorie.
+ * Récupère une spécialité grâce à son ID.
  * @async
  * @function getSpecialiteById
- * @param {Object} req - Objet requête Express (params.id = ID de la spécialité)
+ * @param {Object} req - Objet requête Express
  * @param {Object} res - Objet réponse Express
- * @returns {Promise<void>} JSON avec la spécialité (200), 404 si non trouvée, 500 en cas d'erreur serveur
+ * @returns {Promise<void>} Renvoie la spécialité demandée au format JSON
  */
 exports.getSpecialiteById = async (req, res) => {
   try {
     const specialite = await specialiteService.fetchSpecialiteById(
-      req.params.id
+      req.params.id,
     );
 
     if (!specialite) {
-      return res.status(404).json({ message: "Spécialité non trouvée" });
+      return res.status(404).json({
+        message: "Spécialité non trouvée",
+      });
     }
 
     res.status(200).json(specialite);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Erreur serveur" });
+
+    res.status(500).json({
+      message: "Erreur serveur",
+    });
   }
 };
 
@@ -49,17 +58,21 @@ exports.getSpecialiteById = async (req, res) => {
  * Crée une nouvelle spécialité.
  * @async
  * @function createSpecialite
- * @param {Object} req - Objet requête Express (body = données de la spécialité)
+ * @param {Object} req - Objet requête Express
  * @param {Object} res - Objet réponse Express
- * @returns {Promise<void>} JSON avec la spécialité créée (201), ou 500 en cas d'erreur serveur
+ * @returns {Promise<void>} Renvoie la spécialité créée au format JSON
  */
 exports.createSpecialite = async (req, res) => {
   try {
     const newSpecialite = await specialiteService.createSpecialite(req.body);
+
     res.status(201).json(newSpecialite);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Impossible de créer la spécialité" });
+
+    res.status(500).json({
+      message: "Impossible de créer la spécialité",
+    });
   }
 };
 
@@ -67,26 +80,30 @@ exports.createSpecialite = async (req, res) => {
  * Met à jour une spécialité existante.
  * @async
  * @function updateSpecialite
- * @param {Object} req - Objet requête Express (params.id = ID, body = nouvelles données)
+ * @param {Object} req - Objet requête Express
  * @param {Object} res - Objet réponse Express
- * @returns {Promise<void>} JSON avec la spécialité mise à jour (200), 404 si non trouvée, 500 en cas d'erreur serveur
+ * @returns {Promise<void>} Renvoie la spécialité mise à jour
  */
 exports.updateSpecialite = async (req, res) => {
   try {
     const updatedSpecialite = await specialiteService.updateSpecialite(
       req.params.id,
-      req.body
+      req.body,
     );
 
-    if (!updatedSpecialite)
-      return res.status(404).json({ message: "Spécialité non trouvée" });
+    if (!updatedSpecialite) {
+      return res.status(404).json({
+        message: "Spécialité non trouvée",
+      });
+    }
 
     res.status(200).json(updatedSpecialite);
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ message: "Impossible de mettre à jour la spécialité" });
+
+    res.status(500).json({
+      message: "Impossible de mettre à jour la spécialité",
+    });
   }
 };
 
@@ -94,20 +111,28 @@ exports.updateSpecialite = async (req, res) => {
  * Supprime une spécialité.
  * @async
  * @function deleteSpecialite
- * @param {Object} req - Objet requête Express (params.id = ID de la spécialité)
+ * @param {Object} req - Objet requête Express
  * @param {Object} res - Objet réponse Express
- * @returns {Promise<void>} Message de succès (200), 404 si non trouvée, 500 en cas d'erreur serveur
+ * @returns {Promise<void>} Renvoie un message de confirmation
  */
 exports.deleteSpecialite = async (req, res) => {
   try {
     const deleted = await specialiteService.deleteSpecialite(req.params.id);
 
-    if (!deleted)
-      return res.status(404).json({ message: "Spécialité non trouvée" });
+    if (!deleted) {
+      return res.status(404).json({
+        message: "Spécialité non trouvée",
+      });
+    }
 
-    res.status(200).json({ message: "Spécialité supprimée avec succès" });
+    res.status(200).json({
+      message: "Spécialité supprimée avec succès",
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Impossible de supprimer la spécialité" });
+
+    res.status(500).json({
+      message: "Impossible de supprimer la spécialité",
+    });
   }
 };

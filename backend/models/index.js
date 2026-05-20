@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
     port: dbConfig.port,
-  },
+  }
 );
 
 sequelize
@@ -35,16 +35,12 @@ db.Categorie = require("./Categorie")(sequelize, DataTypes);
 db.Specialite = require("./Specialite")(sequelize, DataTypes);
 
 /**
- * Associations entre les modèles
+ * Associations entre les modèles.
+ * Elles permettent d'utiliser les jointures Sequelize avec include.
  */
 db.Artisan.belongsTo(db.Specialite, {
   foreignKey: "id_specialite",
   as: "specialite",
-});
-
-db.Specialite.hasMany(db.Artisan, {
-  foreignKey: "id_specialite",
-  as: "artisans",
 });
 
 db.Specialite.belongsTo(db.Categorie, {

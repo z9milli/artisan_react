@@ -3,7 +3,7 @@
 
 const express = require("express");
 const cors = require("cors");
-const path = require('path');
+const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 5050; // Port du serveur
@@ -85,7 +85,7 @@ app.use("/api/categories", categorieRoutes);
  * Fallback pour React Router : toutes les routes non API renvoient index.html
  * @note Doit être placé après toutes les routes API
  */
-app.get('*', (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
 });
 
