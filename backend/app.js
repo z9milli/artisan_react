@@ -13,7 +13,18 @@ const port = process.env.PORT || 5050; // Port du serveur
 /**
  * Middleware CORS pour autoriser les requêtes cross-origin
  */
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5050",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 /**
  * Middleware pour parser le JSON dans le body des requêtes
