@@ -1,0 +1,39 @@
+// Desktop/tablette visible par défaut
+.a-propos-desktop {
+  display: block;
+}
+
+.a-propos-mobile {
+  display: none;
+}
+
+// Version mobile
+@media (max-width: 576px) {
+  .a-propos-desktop {
+    display: none;
+  }
+
+  .a-propos-mobile {
+    display: block;
+
+    summary {
+      cursor: pointer;
+      color: #fff;
+      list-style: none;
+    }
+  }
+}
+
+.a-propos-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: #fff;
+}
+
+
+.a-propos-icon {
+  width: 16px;
+  height: 16px;
+}

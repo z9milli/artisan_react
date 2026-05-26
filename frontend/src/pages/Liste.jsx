@@ -5,23 +5,34 @@ import ArtisanCard from "../components/ArtisanCard";
 /**
  * Page affichant la liste des artisans.
  *
- * Si un paramètre `nom` est présent dans l'URL, filtre les artisans
- * par catégorie.
- * Si une query string `q` est présente, affiche les résultats de recherche.
+ * Cette page peut afficher :
+ * - tous les artisans
+ * - les artisans filtrés par catégorie
+ * - les résultats d'une recherche
  *
  * @component
  * @returns {JSX.Element} Liste des artisans
  */
 const Liste = () => {
+  // Récupère le nom de la catégorie depuis l'URL : /categorie/:nom
   const { nom } = useParams();
-  const location = useLocation();
 
+  // Récupère la query string utilisée pour la recherche : /recherche?q=...
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get("q");
 
   const [artisans, setArtisans] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * Récupère les artisans depuis l'API.
+   *
+   * L'URL appelée dépend du contexte :
+   * - tous les artisans
+   * - artisans d'une catégorie
+   * - résultats de recherche
+   */
   useEffect(() => {
     const fetchArtisans = async () => {
       setLoading(true);
@@ -35,13 +46,14 @@ const Liste = () => {
 
         if (query) {
           url = `http://localhost:5050/api/artisans/search?q=${encodeURIComponent(
-            query
+            query,
           )}`;
         }
 
         const response = await fetch(url);
         const data = await response.json();
 
+        // Vérifie que la réponse API est bien un tableau avant d'utiliser map()
         if (Array.isArray(data)) {
           setArtisans(data);
         } else {
@@ -65,7 +77,7 @@ const Liste = () => {
 
   return (
     <main className="container py-4">
-      <h1 className="mb-2 text-center">Liste des Artisans</h1>
+      <h1 className="mb-4 text-center">Liste des artisans</h1>
 
       {nom && <h2 className="mb-4 text-center">Catégorie : {nom}</h2>}
 

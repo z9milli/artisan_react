@@ -4,18 +4,18 @@ import "../styles/Footer.scss";
 /**
  * Composant Footer du site.
  *
- * Affiche les informations de contact dans la colonne gauche
- * et les liens légaux et d'accessibilité dans la colonne droite.
+ * Affiche les coordonnées de contact ainsi que
+ * les liens légaux et d'accessibilité.
  *
  * @component
- * @returns {JSX.Element} Le footer complet du site
+ * @returns {JSX.Element} Footer du site
  */
 function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-container">
         <div className="row justify-content-between">
-          {/* Colonne gauche : coordonnées de contact */}
+          {/* Coordonnées de contact */}
           <div className="col-6 column-left">
             <address className="mb-0">
               <p>101 cours Charlemagne</p>
@@ -26,7 +26,7 @@ function Footer() {
             </address>
           </div>
 
-          {/* Colonne droite : liens légaux et accessibilité */}
+          {/* Liens légaux */}
           <div className="col-6 column-right">
             <p>
               <a href="/mentions" className="text-decoration-none text-reset">
@@ -34,13 +34,13 @@ function Footer() {
               </a>
             </p>
             <p>
-              <a href="/données" className="text-decoration-none text-reset">
+              <a href="/donnees" className="text-decoration-none text-reset">
                 Données personnelles
               </a>
             </p>
             <p>
               <a
-                href="/accessibilité"
+                href="/accessibilite"
                 className="text-decoration-none text-reset"
               >
                 Accessibilité

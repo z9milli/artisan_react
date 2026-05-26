@@ -1,13 +1,18 @@
-$navbar-bg: #f1f8fc; 
-$navbar-text: black; 
+// Variables de couleurs de la navbar
+$navbar-bg: #f1f8fc;
+$navbar-text: black;
 
+// Styles de la barre de navigation
 .navbar-custom {
   background-color: $navbar-bg;
-  padding: 0rem;
+  padding: 0;
 
-  .ml-links{
+  // Décalage des liens pour les centrer visuellement sur desktop
+  .ml-links {
     margin-left: 20rem;
   }
+
+  // Couleur du logo et des liens
   .navbar-brand,
   .nav-link {
     color: $navbar-text;

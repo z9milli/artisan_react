@@ -1,9 +1,79 @@
+// Police principale du site
 @font-face {
   font-family: "Graphik";
-  src: url("../assets/fonts/Graphik-Regular-Trial.woff") ;
-  src: url("../assets/fonts/Graphik-Light-Trial.woff") ;
+  src: url("../assets/fonts/Graphik-Regular-Trial.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
 }
 
-h1, h2, p, div{
-  font-family: "Graphik", serif;
+// Version plus fine de la police
+@font-face {
+  font-family: "Graphik";
+  src: url("../assets/fonts/Graphik-Light-Trial.woff")
+    format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+// Style global
+body {
+  font-family: "Graphik", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+// Titres desktop
+h1 {
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 1.6rem;
+}
+
+h4 {
+  font-weight: 400;
+}
+
+// Responsive tablette
+@media (max-width: 992px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+}
+
+// Responsive mobile
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  body {
+    font-size: 0.95rem;
+  }
 }

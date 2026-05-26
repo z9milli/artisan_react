@@ -15,7 +15,7 @@ import App from "./App";
 /** Création de la racine React */
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-/** Rendu de l'application principale */
+/** Rendu de l'application */
 root.render(
   <React.StrictMode>
     <App />

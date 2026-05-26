@@ -1,40 +1,53 @@
+// Page affichant les informations détaillées d'un artisan
+// ainsi qu'un formulaire de contact.
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getArtisanById } from "../services/api";
+import "../styles/Fiche.scss";
 
 /**
- * Page de fiche d'un artisan.
+ * Page de fiche artisan.
  *
- * Affiche les informations détaillées d'un artisan et un formulaire de contact.
- * Récupère l'artisan via son ID depuis l'API.
+ * Récupère les informations d'un artisan via son ID
+ * et affiche :
+ * - ses informations détaillées
+ * - un formulaire de contact
  *
  * @component
- * @returns {JSX.Element} Page de fiche artisan complète
+ * @returns {JSX.Element} Page de fiche artisan
  */
 const Fiche = () => {
-  const { id } = useParams(); // Récupération de l'ID depuis l'URL
-  const [artisan, setArtisan] = useState(null); // État pour l'artisan
-  const [loading, setLoading] = useState(true); // État de chargement
+  const { id } = useParams();
+
+  const [artisan, setArtisan] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     object: "",
     message: "",
-  }); // État pour le formulaire de contact
-  const [sending, setSending] = useState(false); // État pour le bouton d'envoi
+  });
 
-  // Chargement de l'artisan depuis l'API au montage du composant
+  /**
+   * Charge les informations de l'artisan depuis l'API.
+   */
   useEffect(() => {
     const load = async () => {
       const data = await getArtisanById(id);
+
       setArtisan(data);
       setLoading(false);
     };
+
     load();
   }, [id]);
 
   /**
-   * Gestion de l'envoi du formulaire de contact.
+   * Gère l'envoi du formulaire de contact.
+   *
    * @param {React.FormEvent<HTMLFormElement>} e - Événement de soumission
    */
   const handleSubmit = async (e) => {
@@ -42,10 +55,16 @@ const Fiche = () => {
     setSending(true);
 
     try {
-      // Ici on appellerait l'API pour envoyer le message
       console.log("Formulaire envoyé :", formData);
+
       alert(`Merci ! Votre message sera transmis à ${artisan.nom}.`);
-      setFormData({ name: "", email: "", object: "", message: "" });
+
+      setFormData({
+        name: "",
+        email: "",
+        object: "",
+        message: "",
+      });
     } catch (error) {
       alert("Erreur lors de l'envoi.");
     } finally {
@@ -53,9 +72,13 @@ const Fiche = () => {
     }
   };
 
-  // Affichage pendant le chargement
-  if (loading) return <p className="text-center mt-5">Chargement...</p>;
-  if (!artisan) return <p className="text-center mt-5">Artisan introuvable.</p>;
+  if (loading) {
+    return <p className="text-center mt-5">Chargement...</p>;
+  }
+
+  if (!artisan) {
+    return <p className="text-center mt-5">Artisan introuvable.</p>;
+  }
 
   return (
     <main className="container py-4">
@@ -71,9 +94,8 @@ const Fiche = () => {
         }}
       >
         <div className="row g-4">
-          {/* Colonne gauche : Informations de l'artisan */}
+          {/* Informations de l'artisan */}
           <div className="col-12 col-lg-6">
-            {/* Image de l'artisan */}
             {artisan.image && (
               <img
                 src={artisan.image}
@@ -83,44 +105,74 @@ const Fiche = () => {
               />
             )}
 
-            {/* Nom, spécialité, note et ville */}
             <h2 className="h4 mb-2 text-center" style={{ color: "#fff" }}>
               {artisan.nom}
             </h2>
-            <p className="fw-bold mb-1" style={{ color: "#fff" }}>
+
+            <p className="mb-2" style={{ color: "#fff" }}>
               {artisan.specialite?.nom ||
                 artisan.specialite?.nom_specialite ||
                 "Spécialité"}
             </p>
+
             <p className="mb-2" style={{ color: "#fff" }}>
               {artisan.note} {"⭐".repeat(artisan.note)}
             </p>
+
             <p className="mb-4" style={{ color: "#fff" }}>
               {artisan.ville}
             </p>
 
-            {/* Section "À propos" */}
+            {/* Section A propos */}
             <section
               className="p-3 rounded mb-3"
               style={{ backgroundColor: "#384050" }}
             >
-              <h3 className="h5 pb-2 mb-3" style={{ color: "#fff" }}>
-                A Propos
-              </h3>
-              <p
-                style={{
-                  color: "#fff",
-                  lineHeight: "1.6",
-                  whiteSpace: "pre-wrap",
-                }}
-              >
-                {artisan.a_propos ||
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin."}
-              </p>
+              {/* Version desktop/tablette */}
+              <div className="a-propos-desktop">
+                <h3 className="h5 pb-2 mb-3" style={{ color: "#fff" }}>
+                  A propos...
+                </h3>
+
+                <p
+                  style={{
+                    color: "#fff",
+                    lineHeight: "1.6",
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  {artisan.a_propos}
+                </p>
+              </div>
+
+              {/* Version mobile déroulante */}
+              <div className="a-propos-mobile">
+                <details>
+                  <summary className="a-propos-summary">
+                    <span>A propos...</span>
+                    <img
+                      src="/img/fleche.svg"
+                      alt=""
+                      className="a-propos-icon"
+                    />
+                  </summary>
+
+                  <p
+                    style={{
+                      color: "#fff",
+                      marginTop: "1rem",
+                      lineHeight: "1.6",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    {artisan.a_propos}
+                  </p>
+                </details>
+              </div>
             </section>
           </div>
 
-          {/* Colonne droite : Formulaire de contact */}
+          {/* Formulaire de contact */}
           <div className="col-12 col-lg-6">
             <section
               className="p-4 rounded h-100"
@@ -129,6 +181,7 @@ const Fiche = () => {
               <h3 className="text-center mb-4" style={{ color: "#00497c" }}>
                 Formulaire de contact
               </h3>
+
               <form onSubmit={handleSubmit}>
                 <input
                   type="text"
@@ -140,6 +193,7 @@ const Fiche = () => {
                   }
                   required
                 />
+
                 <input
                   type="email"
                   className="form-control mb-3"
@@ -150,6 +204,7 @@ const Fiche = () => {
                   }
                   required
                 />
+
                 <input
                   type="text"
                   className="form-control mb-3"
@@ -160,6 +215,7 @@ const Fiche = () => {
                   }
                   required
                 />
+
                 <textarea
                   className="form-control mb-4"
                   rows="6"
@@ -169,7 +225,8 @@ const Fiche = () => {
                     setFormData({ ...formData, message: e.target.value })
                   }
                   required
-                ></textarea>
+                />
+
                 <button
                   type="submit"
                   className="btn btn-light w-100"
@@ -182,11 +239,8 @@ const Fiche = () => {
           </div>
         </div>
 
-        {/* Lien vers le site web de l'artisan */}
-        <section
-          className="text-center mt-4 pt-3"
-          style={{ borderColor: "rgba(255,255,255,0.3)" }}
-        >
+        {/* Site web de l'artisan */}
+        <section className="text-center mt-4 pt-3">
           {artisan.site_web ? (
             <a
               href={artisan.site_web}

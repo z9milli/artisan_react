@@ -1,3 +1,8 @@
+/**
+ * Modèle Sequelize représentant une spécialité.
+ * Définit la structure de la table "specialite" dans la base de données.
+ */
+
 module.exports = (sequelize, DataTypes) => {
   const Specialite = sequelize.define(
     "specialite",

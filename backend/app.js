@@ -1,96 +1,105 @@
 // Point d'entrée de l'application Express.
-// Configure les middlewares, les routes et démarre le serveur.
+// Configure les middlewares, les routes API et démarre le serveur.
 
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
 const app = express();
-const port = process.env.PORT || 5050; // Port du serveur
+const port = process.env.PORT || 5050;
 
-// --- Middlewares ---
+// --------------------
+// Configuration CORS
+// --------------------
 
 /**
- * Middleware CORS pour autoriser les requêtes cross-origin
+ * Liste des origines autorisées à accéder à l'API.
+ * Limite les requêtes aux applications connues.
  */
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:5050",
-];
+const allowedOrigins = ["http://localhost:3000", "http://localhost:5050"];
 
 app.use(
   cors({
     origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
+// --------------------
+// Middlewares Express
+// --------------------
+
 /**
- * Middleware pour parser le JSON dans le body des requêtes
+ * Permet de lire les données JSON envoyées dans les requêtes.
  */
 app.use(express.json());
 
 /**
- * Middleware pour parser les données encodées en URL
+ * Permet de lire les données envoyées via des formulaires.
  */
 app.use(express.urlencoded({ extended: true }));
 
 /**
- * Middleware global pour logger les requêtes
+ * Middleware global affichant les requêtes dans le terminal.
  */
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
 
-// --- Route test ---
+// --------------------
+// Route de test
+// --------------------
 
 /**
- * @route GET /
- * @description Route test pour vérifier que le serveur fonctionne
- * @returns {Object} Message "Hello world"
+ * Vérifie que le serveur Express fonctionne correctement.
  */
 app.get("/", (req, res) => {
   res.json({ message: "Hello world" });
 });
 
-// --- Import des routes ---
+// --------------------
+// Import des routes API
+// --------------------
 
 const artisanRoutes = require("./routes/artisans");
 const specialiteRoutes = require("./routes/specialites");
 const categorieRoutes = require("./routes/categories");
 
+// --------------------
+// Fichiers statiques React
+// --------------------
+
 /**
- * Servir les fichiers statiques du build React
+ * Sert les fichiers du build React.
  */
 app.use(express.static(path.join(__dirname, "frontend", "build")));
 
-/**
- * Routes API pour les artisans
- */
+// --------------------
+// Routes API
+// --------------------
+
 app.use("/api/artisans", artisanRoutes);
-
-/**
- * Routes API pour les spécialités
- */
 app.use("/api/specialites", specialiteRoutes);
-
-/**
- * Routes API pour les catégories
- */
 app.use("/api/categories", categorieRoutes);
 
+// --------------------
+// Fallback React Router
+// --------------------
+
 /**
- * Fallback pour React Router : toutes les routes non API renvoient index.html
- * @note Doit être placé après toutes les routes API
+ * Toutes les routes non API renvoient le fichier index.html.
+ * Permet à React Router de gérer la navigation côté frontend.
  */
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
 });
 
-// --- Démarrage du serveur ---
+// --------------------
+// Démarrage du serveur
+// --------------------
 
 app.listen(port, () => {
-  console.log("Serveur démarré sur le port " + port);
+  console.log(`Serveur démarré sur le port ${port}`);
 });

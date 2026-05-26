@@ -10,17 +10,18 @@ import Navbar from "./components/Navbar";
 /**
  * Composant principal de l'application React.
  *
- * Gère la navigation (routing) via react-router-dom, et inclut
- * la barre de navigation et le footer sur toutes les pages.
+ * Gère la navigation avec React Router et affiche
+ * la navbar et le footer sur toutes les pages.
  *
  * Routes définies :
- * - "/" : Page d'accueil (Accueil.jsx)
- * - "/categorie/:nom" : Liste des artisans filtrée par catégorie (Liste.jsx)
- * - "/fiche/:id" : Fiche détaillée d'un artisan (Fiche.jsx)
- * - "*" : Page d'erreur pour toutes les routes non définies (Erreur.jsx)
+ * - "/" : page d'accueil
+ * - "/categorie/:nom" : liste des artisans filtrée par catégorie
+ * - "/recherche" : résultats de recherche
+ * - "/fiche/:id" : fiche détaillée d'un artisan
+ * - "*" : page d'erreur 404
  *
  * @component
- * @returns {JSX.Element} L'application complète avec routes, Navbar et Footer
+ * @returns {JSX.Element} Application complète
  */
 function App() {
   return (
@@ -28,21 +29,17 @@ function App() {
       {/* Navbar visible sur toutes les pages */}
       <Navbar />
 
-      {/* Contenu principal avec hauteur minimale pour le layout */}
+      {/* Contenu principal de l'application */}
       <main style={{ minHeight: "70vh" }}>
         <Routes>
-          {/* Route page d'accueil */}
           <Route path="/" element={<Accueil />} />
 
-          {/* Route liste d'artisans filtrée par catégorie */}
           <Route path="/categorie/:nom" element={<Liste />} />
 
           <Route path="/recherche" element={<Liste />} />
 
-          {/* Route fiche détaillée d'un artisan */}
           <Route path="/fiche/:id" element={<Fiche />} />
 
-          {/* Route pour toutes les autres URL : page 404 */}
           <Route path="*" element={<Erreur />} />
         </Routes>
       </main>

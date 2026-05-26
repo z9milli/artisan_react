@@ -1,16 +1,22 @@
-h1, h2 {
-  font-size: 1.3rem; 
+// Titres principaux de la page d'accueil
+h1,
+h2 {
+  font-size: 1.3rem;
 }
 
+// Bloc contenant les étapes explicatives
 .etapes-container {
   background-color: #82b864;
-  margin: 1.5rem; 
+  margin: 1.5rem;
 }
 
+// Cartes des artisans du mois
 .artisan-top {
-  background-color: rgb(0, 116, 199, 0.85);
+  background-color: #0074c7;
 }
 
-p{
+// Texte des cartes et sections
+.artisan-top p,
+.etapes-container p {
   color: black;
 }

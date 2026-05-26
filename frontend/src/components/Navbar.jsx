@@ -3,31 +3,40 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.scss";
 
 /**
- * Composant Navbar du site.
+ * Barre de navigation principale du site.
  *
- * Affiche le logo, les liens vers les catégories et une barre de recherche.
- * La recherche redirige vers la page de résultats avec la query string.
+ * Affiche :
+ * - le logo du site
+ * - les liens vers les catégories
+ * - une barre de recherche permettant de rechercher un artisan
  *
  * @component
  * @returns {JSX.Element} Barre de navigation complète
  */
 const Navbar = () => {
-  // État pour la recherche
+  // État contenant la valeur saisie dans la barre de recherche
   const [searchQuery, setSearchQuery] = useState("");
+
   const navigate = useNavigate();
 
   /**
-   * Gestionnaire de soumission du formulaire de recherche.
-   * Redirige vers la page de recherche avec la query string.
-   * @param {React.FormEvent<HTMLFormElement>} e - Événement de soumission
+   * Gère la soumission du formulaire de recherche.
+   * Redirige vers la page de résultats avec la query string.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - Événement de soumission du formulaire
    */
   const handleSearch = (e) => {
     e.preventDefault();
+
     if (searchQuery.trim()) {
       navigate(`/recherche?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
-  
+
+  /**
+   * Ferme automatiquement le menu mobile Bootstrap
+   * après un clic sur un lien.
+   */
   const closeNavbar = () => {
     const navbar = document.getElementById("navbarSupportedContent");
 
@@ -40,12 +49,12 @@ const Navbar = () => {
     <header>
       <nav className="navbar navbar-expand-lg navbar-custom">
         <div className="container-fluid">
-          {/* Logo cliquable vers la page d'accueil */}
+          {/* Logo du site */}
           <Link className="navbar-brand" to="/" onClick={closeNavbar}>
             <img src="./img/logo.png" alt="TT Artisan" height="80" />
           </Link>
 
-          {/* Bouton toggler pour mobile */}
+          {/* Bouton menu mobile */}
           <button
             className="navbar-toggler"
             type="button"
@@ -53,31 +62,50 @@ const Navbar = () => {
             data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="Toggle navigation"
+            aria-label="Ouvrir le menu de navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {/* Liens vers les catégories */}
+            {/* Navigation des catégories */}
             <ul className="navbar-nav ml-links me-auto mb-2 mb-lg-0">
               <li className="nav-item me-5">
-                <Link className="nav-link" to="/categorie/Bâtiment" onClick={closeNavbar}>
+                <Link
+                  className="nav-link"
+                  to="/categorie/Bâtiment"
+                  onClick={closeNavbar}
+                >
                   Bâtiment
                 </Link>
               </li>
+
               <li className="nav-item me-5">
-                <Link className="nav-link" to="/categorie/Services" onClick={closeNavbar}>
+                <Link
+                  className="nav-link"
+                  to="/categorie/Services"
+                  onClick={closeNavbar}
+                >
                   Services
                 </Link>
               </li>
+
               <li className="nav-item me-5">
-                <Link className="nav-link" to="/categorie/Fabrication" onClick={closeNavbar}>
+                <Link
+                  className="nav-link"
+                  to="/categorie/Fabrication"
+                  onClick={closeNavbar}
+                >
                   Fabrication
                 </Link>
               </li>
+
               <li className="nav-item me-5">
-                <Link className="nav-link" to="/categorie/Alimentation" onClick={closeNavbar}>
+                <Link
+                  className="nav-link"
+                  to="/categorie/Alimentation"
+                  onClick={closeNavbar}
+                >
                   Alimentation
                 </Link>
               </li>
@@ -89,7 +117,7 @@ const Navbar = () => {
                 className="form-control me-3"
                 type="search"
                 placeholder="Recherche"
-                aria-label="Search"
+                aria-label="Recherche d'un artisan"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

@@ -1,3 +1,8 @@
+/**
+ * Modèle Sequelize représentant un artisan.
+ * Définit la structure de la table "artisan" dans la base de données.
+ */
+
 module.exports = (sequelize, DataTypes) => {
   const Artisan = sequelize.define(
     "artisan",
