@@ -19,7 +19,7 @@ const port = process.env.PORT || 5050;
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:5050",
-  "https://TON-URL-FRONTEND.onrender.com",
+  "https://tt-artisan-frontend.onrender.com",
 ];
 
 app.use(
