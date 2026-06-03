@@ -51,7 +51,7 @@ const Navbar = () => {
         <div className="container-fluid">
           {/* Logo du site */}
           <Link className="navbar-brand" to="/" onClick={closeNavbar}>
-            <img src="/img/logo.png" alt="TT Artisan" height="80" />
+            <img src="/img/Logo.png" alt="TT Artisan" height="80" />
           </Link>
 
           {/* Bouton menu mobile */}
