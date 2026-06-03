@@ -11,6 +11,13 @@ L’application repose sur une architecture frontend / backend :
 
 ---
 
+## Déploiement
+
+Frontend : https://tt-artisan-frontend.onrender.com
+
+Backend API : https://tt-artisan.onrender.com
+
+---
 ## Technologies
 
 ### Frontend
@@ -26,6 +33,10 @@ L’application repose sur une architecture frontend / backend :
 - Sequelize ORM
 - MySQL
 
+### Hébergement
+- Render (Frontend / Backend)
+- Aiven (base de données MySQL)
+
 ---
 
 ## Fonctionnalités
@@ -36,7 +47,7 @@ L’application repose sur une architecture frontend / backend :
 - Fiche détaillée d'un artisan
 - Formulaire de contact
 - Navigation responsive
-- Gestion des erreurs avec page 404
+- Gestion des erreurs (page 404)
 - API REST avec Sequelize
 - CRUD des artisans, catégories et spécialités
 
@@ -92,11 +103,9 @@ Le backend sera accessible sur : http://localhost:5050
 
 ## Base de données
 
-Créer une base de données MySQL puis importer les fichiers SQL présents dans : 
+La base de données MySQL est hébergée sur Aiven.
 
-```txt
-tta_sql/
-```
+Les scripts SQL permettant de recréer la base sont disponibles dans le dossier `tta_sql`.
 
 ---
 
@@ -110,7 +119,6 @@ TT_ARTISAN/
 │   ├── models/
 │   ├── routes/
 │   ├── services/
-│   ├── .env
 │   └── app.js
 │
 ├── frontend/
@@ -121,10 +129,8 @@ TT_ARTISAN/
 │   │   ├── pages/
 │   │   ├── services/
 │   │   └── styles/
-│   └── .env
 │
 ├── tta_sql/
-│
 ├── MCD.png
 ├── MLD.png
 └── README.md
