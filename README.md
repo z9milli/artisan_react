@@ -127,7 +127,6 @@ TT_ARTISAN/
 │
 ├── MCD.png
 ├── MLD.png
-├── railway.json
 └── README.md
 
 
