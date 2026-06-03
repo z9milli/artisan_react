@@ -16,7 +16,11 @@ const port = process.env.PORT || 5050;
  * Liste des origines autorisées à accéder à l'API.
  * Limite les requêtes aux applications connues.
  */
-const allowedOrigins = ["http://localhost:3000", "http://localhost:5050"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5050",
+  "https://TON-URL-FRONTEND.onrender.com",
+];
 
 app.use(
   cors({
