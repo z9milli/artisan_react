@@ -3,6 +3,15 @@ import { useParams, useLocation } from "react-router-dom";
 import ArtisanCard from "../components/ArtisanCard";
 
 /**
+ * URL de l'API utilisée selon l'environnement.
+ * Local en développement, Render en production.
+ */
+const API_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://tt-artisan.onrender.com"
+    : "http://localhost:5050";
+
+/**
  * Page affichant la liste des artisans.
  *
  * Cette page peut afficher :
@@ -38,14 +47,16 @@ const Liste = () => {
       setLoading(true);
 
       try {
-        let url = "http://localhost:5050/api/artisans";
+        let url = `${API_BASE_URL}/api/artisans`;
 
         if (nom) {
-          url = `http://localhost:5050/api/artisans/categorie/${nom}`;
+          url = `${API_BASE_URL}/api/artisans/categorie/${encodeURIComponent(
+            nom,
+          )}`;
         }
 
         if (query) {
-          url = `http://localhost:5050/api/artisans/search?q=${encodeURIComponent(
+          url = `${API_BASE_URL}/api/artisans/search?q=${encodeURIComponent(
             query,
           )}`;
         }

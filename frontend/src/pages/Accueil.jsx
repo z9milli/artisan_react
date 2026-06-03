@@ -4,9 +4,13 @@ import "../styles/global.scss";
 
 /**
  * URL de l'API backend.
- * À remplacer plus tard par une variable d'environnement côté frontend.
+ * En développement : API locale.
+ * En production : API déployée sur Render.
  */
-const REACT_APP_API_URL = "http://localhost:5050";
+const API_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://tt-artisan.onrender.com"
+    : "http://localhost:5050";
 
 /**
  * Génère les étoiles correspondant à la note d'un artisan.
@@ -41,7 +45,7 @@ const Accueil = () => {
    */
   const fetchArtisansDuMois = async () => {
     try {
-      const response = await fetch(`${REACT_APP_API_URL}/api/artisans/mois`);
+      const response = await fetch(`${API_BASE_URL}/api/artisans/mois`);
 
       if (!response.ok) {
         throw new Error("Erreur lors de la récupération des artisans du mois");
