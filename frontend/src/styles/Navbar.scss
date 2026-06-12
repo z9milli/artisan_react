@@ -12,6 +12,15 @@ $navbar-text: black;
     margin-left: 20rem;
   }
 
+  // Supprime le décalage des liens sur tablette et mobile
+  // afin de conserver un affichage centré dans le menu responsive
+  @media (max-width: 991px) {
+    .ml-links {
+      margin-left: 0;
+      text-align: center;
+    }
+  }
+
   // Couleur du logo et des liens
   .navbar-brand,
   .nav-link {
